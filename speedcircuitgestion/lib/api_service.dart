@@ -15,5 +15,14 @@ class ApiService {
     }
   }
 
+  Future<List<String>> fetchVehicules() async {
+    final response = await http.get(Uri.parse('$base64Url/vehicules'));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Echec du chargement des véhicules');
+    }
+  }
+
   final String baseUrl = 'http://172.16.194.254:5000';
 }

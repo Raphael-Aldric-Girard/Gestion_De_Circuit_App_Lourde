@@ -68,7 +68,7 @@ class _AuthScreenState extends State<AuthScreen> {
               obscureText: true,
             ),
             SizedBox(height: 20),
-            ElevatedButton(onPressed: _login, child: Text('Se conncter')),
+            ElevatedButton(onPressed: _login, child: Text('Se connecter')),
             if (_errorMessage.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),

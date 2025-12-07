@@ -24,5 +24,5 @@ class ApiService {
     }
   }
 
-  final String baseUrl = 'http://172.16.195.254:5000';
+  final String baseUrl = 'http://172.16.194.254:5000';
 }

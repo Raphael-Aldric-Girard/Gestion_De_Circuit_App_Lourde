@@ -11,14 +11,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SpeedCircuit Authentification',
       theme: ThemeData(primaryColor: Color(0xFF1a0a7f)),
-      home: Vehicule(),
+      home: GestionVehicule(),
     );
   }
 }
 
 
 class GestionVehicule extends StatefulWidget {
-  const GestionVehicule({super.key, required this.title});
+  const GestionVehicule({Key? key, this.title = 'Gestion des Véhicules'}) : super(key: key);
   final String title;
 
   @override

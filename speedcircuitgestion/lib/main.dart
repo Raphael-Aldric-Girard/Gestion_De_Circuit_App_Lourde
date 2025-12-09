@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:speedcircuitgestion/gestion_vehicule.dart';
 import 'api_service.dart';
-import 'evenement.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -35,7 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
       final result = await ApiService().login(identifiant, password);
       if (result.containsKey('message')) {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => EvenementPage())
+          MaterialPageRoute(builder: (context) => GestionVehicule())
         );
       } else {
         setState(() {

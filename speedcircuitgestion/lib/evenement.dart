@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'api_service.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
 class EvenementPage extends StatefulWidget {
   const EvenementPage({Key? key}) : super(key: key);
 
@@ -21,30 +25,19 @@ class _EvenementPageState extends State<EvenementPage> {
 
   Future<void> _loadEvenements() async {
     try {
-      // Remplacez ceci par votre appel à la base de données
       final data = await apiService.fetchEvenements();
-      for (var evenement in data) {
-        setState(() {
-        evenements = data[evenement];
+
+      setState(() {
+        evenements = List<String>.from(data);
         isLoading = false;
       });
-      }
-    } catch (e) {
-      setState(() => isLoading = false);
-    }
-  }
 
-  Future<List<String>> fetchEvenementsFromDatabase() async {
-    // Intégrez votre logique de base de données ici
-    // (Firebase, API REST, SQLite, etc.)
-    await Future.delayed(Duration(seconds: 1));
-    return [
-      'Course 1',
-      'Essai 1',
-      'Libre 1',
-      'Evenement 2',
-      'Evenement 4',
-    ];
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print("Erreur de chargement : $e");
+    }
   }
 
   @override

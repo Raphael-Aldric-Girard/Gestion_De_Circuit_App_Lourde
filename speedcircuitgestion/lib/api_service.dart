@@ -24,5 +24,15 @@ class ApiService {
     }
   }
 
+
+  Future<List<String>> fetchEvenements() async {
+    final response = await http.get(Uri.parse('$baseUrl/evenement'));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Echec du chargement des événements');
+    }
+  }
+  
   final String baseUrl = 'http://172.16.194.254:5000';
 }

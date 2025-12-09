@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:speedcircuitgestion/main.dart';
+import 'package:speedcircuitgestion/gestion_vehicule.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

@@ -6,7 +6,7 @@ class ApiService {
     final response = await http.post(
       Uri.parse('$baseUrl/login'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'identifiant': identifiant, 'password': password}),
+      body: jsonEncode({'identifiant': identifiant, 'mdp': password}),
     );
     if (response.statusCode == 200) {
       return json.decode(response.body);
@@ -15,12 +15,12 @@ class ApiService {
     }
   }
 
-  Future<List<dynamic>> fetchEvenements() async {
-    final response = await http.get(Uri.parse('$baseUrl/evenement'));
+  Future<List<String>> fetchVehicules() async {
+    final response = await http.get(Uri.parse('$baseUrl/vehicule'));
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      return json.decode(response.body);
     } else {
-      throw Exception('Failed to load utilisateurs');
+      throw Exception('Echec du chargement des véhicules');
     }
   }
 

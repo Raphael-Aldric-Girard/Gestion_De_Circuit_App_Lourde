@@ -24,7 +24,7 @@ class _EvenementPageState extends State<EvenementPage> {
       // Remplacez ceci par votre appel à la base de données
       final data = await apiService.fetchEvenements();
       for (var evenement in data) {
-      setState(() {
+        setState(() {
         evenements = data[evenement];
         isLoading = false;
       });

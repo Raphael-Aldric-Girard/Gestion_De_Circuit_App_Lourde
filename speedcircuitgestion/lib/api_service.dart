@@ -15,6 +15,17 @@ class ApiService {
     }
   }
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   Future<List<String>> fetchVehicules() async {
     final response = await http.get(Uri.parse('$baseUrl/vehicule'));
     if (response.statusCode == 200) {

@@ -24,7 +24,7 @@ class ApiService {
     }
   }
 
-
+  // Nouvelle méthode pour récupérer les événements
   Future<List<String>> fetchEvenements() async {
     final response = await http.get(Uri.parse('$baseUrl/evenement'));
     if (response.statusCode == 200) {
@@ -34,5 +34,7 @@ class ApiService {
     }
   }
   
+
+
   final String baseUrl = 'http://172.16.194.254:5000';
 }

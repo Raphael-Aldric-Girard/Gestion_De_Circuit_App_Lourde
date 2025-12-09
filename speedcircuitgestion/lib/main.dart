@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'api_service.dart';
 import 'evenement.dart';
+import 'gestion_vehicule.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,9 +55,22 @@ class _AuthScreenState extends State<AuthScreen> {
       if (result != null && !result.containsKey('error')) {
         // Connexion réussie - navigation
         if (mounted) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => EvenementPage())
-          );
+          switch (result.user.Poste) {
+            case 1:
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => EvenementPage())
+              );
+              break;
+            case 2:
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => GestionVehicule())
+              );
+              break;
+            default:
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => EvenementPage())
+              );
+          }
         }
       } else {
         // Échec de connexion

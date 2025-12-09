@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'api_service.dart';
 
 class EvenementPage extends StatefulWidget {
   const EvenementPage({Key? key}) : super(key: key);
@@ -8,6 +9,7 @@ class EvenementPage extends StatefulWidget {
 }
 
 class _EvenementPageState extends State<EvenementPage> {
+  final ApiService apiService = ApiService();
   List<String> evenements = [];
   bool isLoading = true;
 
@@ -20,11 +22,13 @@ class _EvenementPageState extends State<EvenementPage> {
   Future<void> _loadEvenements() async {
     try {
       // Remplacez ceci par votre appel à la base de données
-      final data = await fetchEvenementsFromDatabase();
+      final data = await apiService.fetchEvenements();
+      for (var evenement in data) {
       setState(() {
-        evenements = data;
+        evenements = data[evenement];
         isLoading = false;
       });
+      }
     } catch (e) {
       setState(() => isLoading = false);
     }

@@ -26,59 +26,27 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _identifiantController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _errorMessage = '';
-  bool _isLoading = false;
 
   Future<void> _login() async {
-    final String identifiant = _identifiantController.text.trim();
-    final String password = _passwordController.text.trim();
-
-    // Validation basique
-    if (identifiant.isEmpty || password.isEmpty) {
-      setState(() {
-        _errorMessage = 'Veuillez remplir tous les champs';
-      });
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-      _errorMessage = '';
-    });
+    final String identifiant = _identifiantController.text;
+    final String password = _passwordController.text;
 
     try {
       final result = await ApiService().login(identifiant, password);
-      
-      print('Résultat API: $result'); // Debug
-      
-      // Vérifier si la connexion a réussi
-      if (result != null && !result.containsKey('error')) {
-        // Connexion réussie - navigation
-        if (mounted) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => EvenementPage())
-          );
-        }
+      if (result.containsKey('message')) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => EvenementPage())
+        );
       } else {
-        // Échec de connexion
         setState(() {
-          _errorMessage = result['error'] ?? 'Identifiants incorrects';
-          _isLoading = false;
+          _errorMessage = 'Echec de la connexion : ${result['error']}';
         });
       }
     } catch (error) {
-      print('Erreur: $error'); // Debug
       setState(() {
-        _errorMessage = 'Erreur de connexion au serveur: $error';
-        _isLoading = false;
+        _errorMessage = 'Erreur de connexion au serveur';
       });
     }
-  }
-
-  @override
-  void dispose() {
-    _identifiantController.dispose();
-    _passwordController.dispose();
-    super.dispose();
   }
 
   @override
@@ -92,40 +60,19 @@ class _AuthScreenState extends State<AuthScreen> {
           children: [
             TextField(
               controller: _identifiantController,
-              decoration: InputDecoration(
-                labelText: 'Identifiant',
-                border: OutlineInputBorder(),
-              ),
-              enabled: !_isLoading,
+              decoration: InputDecoration(labelText: 'Identifiant'),
             ),
-            SizedBox(height: 16),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(
-                labelText: 'Mot de passe',
-                border: OutlineInputBorder(),
-              ),
+              decoration: InputDecoration(labelText: 'Mot de passe'),
               obscureText: true,
-              enabled: !_isLoading,
             ),
             SizedBox(height: 20),
-            _isLoading
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: _login,
-                    child: Text('Se connecter'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
-                    ),
-                  ),
+            ElevatedButton(onPressed: _login, child: Text('Se connecter')),
             if (_errorMessage.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
-                child: Text(
-                  _errorMessage,
-                  style: TextStyle(color: Colors.red),
-                  textAlign: TextAlign.center,
-                ),
+                child: Text(_errorMessage, style: TextStyle(color: Colors.red)),
               ),
           ],
         ),

@@ -14,17 +14,6 @@ class ApiService {
       throw Exception('Echec de la connexion');
     }
   }
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   Future<List<String>> fetchVehicules() async {
     final response = await http.get(Uri.parse('$baseUrl/vehicule'));

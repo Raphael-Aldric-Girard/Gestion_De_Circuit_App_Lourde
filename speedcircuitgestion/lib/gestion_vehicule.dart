@@ -1,6 +1,22 @@
 import 'api_service.dart';
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'SpeedCircuit Authentification',
+      theme: ThemeData(primaryColor: Color(0xFF1a0a7f)),
+      home: Vehicule(),
+    );
+  }
+}
+
+
 class GestionVehicule extends StatefulWidget {
   const GestionVehicule({super.key, required this.title});
   final String title;

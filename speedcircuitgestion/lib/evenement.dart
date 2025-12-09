@@ -9,7 +9,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      title : 'Gestion des événements',
+      theme: ThemeData(primaryColor: Color(0xFF1a0a7f)),
       home: EvenementPage(),
     );
   }

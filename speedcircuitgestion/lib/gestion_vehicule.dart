@@ -9,17 +9,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SpeedCircuit Authentification',
+      title: 'Gestion des véhicules',
       theme: ThemeData(primaryColor: Color(0xFF1a0a7f)),
-      home: Vehicule(),
+      home: GestionVehicule(),
     );
   }
 }
 
 
 class GestionVehicule extends StatefulWidget {
-  const GestionVehicule({super.key, required this.title});
-  final String title;
+  const GestionVehicule({Key? key}): super(key: key);
+  //final String title;
 
   @override
   State<GestionVehicule> createState() => _GestionVehicule();
@@ -59,7 +59,27 @@ class _GestionVehicule extends State<GestionVehicule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Color(0xFF1a0a7f),
+        title: Row(
+          children: [
+            Text(
+              'Speed Circuit',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontStyle: FontStyle.italic
+              ),
+            ),
+            SizedBox(width: 40),
+            Text('Accueil', style: TextStyle(color: Colors.white)),
+          ],
+        ),
+        actions: [
+          Container(
+            color: Color(0xFFd63447),
+            padding: EdgeInsets.symmetric(horizontal: 16),
+          ),
+        ],
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())

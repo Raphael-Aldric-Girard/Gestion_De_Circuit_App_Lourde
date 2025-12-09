@@ -55,7 +55,7 @@ class _AuthScreenState extends State<AuthScreen> {
       if (result != null && !result.containsKey('error')) {
         // Connexion réussie - navigation
         if (mounted) {
-          switch (result.user.Poste) {
+          switch (result['user']['Poste']) {
             case 1:
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => EvenementPage())

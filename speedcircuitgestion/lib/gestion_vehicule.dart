@@ -42,6 +42,7 @@ class _GestionVehicule extends State<GestionVehicule> {
     try {
       // Appel à l'API pour récupérer les noms des véhicules
       final data = await ApiService().fetchVehicules();
+      print('Résultat API: $data');
       setState(() {
         nom_vehicule = data;  
         isLoading = false;

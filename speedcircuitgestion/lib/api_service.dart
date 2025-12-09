@@ -15,14 +15,27 @@ class ApiService {
     }
   }
   
-  Future<List<String>> fetchVehicules() async {
-    final response = await http.get(Uri.parse('$baseUrl/vehicule'));
+  // Dans votre classe ApiService
+
+Future<List<String>> fetchVehicules() async {
+  try {
+    final response = await http.get(
+      Uri.parse('$baseUrl/vehicule'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      final data = json.decode(response.body);
+      return List<String>.from(data ?? []);
+      
     } else {
-      throw Exception('Echec du chargement des véhicules');
+      throw Exception('Erreur ${response.statusCode}');
     }
+  } catch (e) {
+    print('Erreur API: $e');
+    rethrow;
   }
+}
 
   // Nouvelle méthode pour récupérer les événements
   Future<List<String>> fetchEvenements() async {

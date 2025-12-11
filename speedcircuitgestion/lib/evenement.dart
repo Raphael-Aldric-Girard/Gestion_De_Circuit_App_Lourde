@@ -37,7 +37,7 @@ class _EvenementPageState extends State<EvenementPage> {
   Future<void> _loadEvenements() async {
     try {
       final data = await apiService.fetchEvenements();
-
+      print("Données des événements: $data");
       setState(() {
         evenements = List<String>.from(data);
         isLoading = false;

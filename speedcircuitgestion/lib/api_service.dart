@@ -50,6 +50,45 @@ Future<List<String>> fetchVehicules() async {
       throw Exception('Echec du chargement des événements');
     }
   }
+
+  Future<List<String>> fetchAllReservations() async {
+    final response = await http.get(Uri.parse('$baseUrl/toutes-reservations'));
+    if (response.statusCode == 200){
+      final dynamic data = json.decode(response.body);
+      if (data is List) {
+        return data.map((e) => e.toString()).toList();
+      }
+      throw Exception('Format de réponse invalide');
+    } else {
+      throw Exception('Echec du chargement des réservations');
+    }
+  }
+
+  Future<List<String>> fetchTodayReservations() async {
+    final response = await http.get(Uri.parse('$baseUrl/toutes-reservations/today'));
+    if (response.statusCode ==200){
+      final dynamic data = json.decode(response.body);
+      if (data is List) {
+        return data.map((e) => e.toString()).toList();
+      }
+      throw Exception('Format de réponse invalide');
+    } else {
+      throw Exception('Echec du chargement des réservations d\'aujourd\'hui');  
+    }
+  }
+
+  Future<List<String>> fetchPastReservations() async {
+    final response = await http.get(Uri.parse('$baseUrl/toutes-reservations/past'));
+    if (response.statusCode ==200){
+      final dynamic data = json.decode(response.body);
+      if (data is List) {
+        return data.map((e) => e.toString()).toList();
+      }
+      throw Exception('Format de réponse invalide');
+    } else {
+      throw Exception('Echec du chargement des réservations passées');  
+    }
+  }
   
   final String baseUrl = 'http://172.16.194.254:5000';
 }

@@ -27,9 +27,10 @@ Future<List<String>> fetchVehicules() async {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
      return data.map<String>((vehicule) {
+        final id = vehicule["IdVehicule"];
         final marque = vehicule["Marque"];
         final modele = vehicule["Modele"];
-        return "$marque $modele";
+        return "$id $marque $modele";
       }).toList();
     } else {
       throw Exception('Erreur ${response.statusCode}');

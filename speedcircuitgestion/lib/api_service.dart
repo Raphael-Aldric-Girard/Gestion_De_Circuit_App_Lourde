@@ -42,14 +42,11 @@ Future<List<String>> fetchVehicules() async {
 }
 
   // Nouvelle méthode pour récupérer les événements
-  Future<List<String>> fetchEvenements() async {
+  Future<List<Map<String, dynamic>>> fetchEvenements() async {
     final response = await http.get(Uri.parse('$baseUrl/evenement'));
     if (response.statusCode == 200) {
-      final dynamic data = json.decode(response.body);
-      if (data is List) {
-        return data.map((e) => e.toString()).toList();
-      }
-      throw Exception('Format de réponse invalide');
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((item) => item as Map<String, dynamic>).toList();
     } else {
       throw Exception('Echec du chargement des événements');
     }

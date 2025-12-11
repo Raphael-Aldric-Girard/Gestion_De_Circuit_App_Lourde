@@ -17,41 +17,39 @@ class ApiService {
   
   // Dans votre classe ApiService
 
-Future<List<String>> fetchVehicules() async {
-  try {
-    final response = await http.get(
-      Uri.parse('$baseUrl/vehicule'),
-      headers: {'Content-Type': 'application/json'},
-    );
-    
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return List<String>.from(data ?? []);
+  Future<List<String>> fetchVehicules() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/vehicule'),
+        headers: {'Content-Type': 'application/json'},
+      );
       
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return List<String>.from(data ?? []);
+        
+      } else {
+        throw Exception('Erreur ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erreur API: $e');
+      rethrow;
+    }
+  }
+
+    // Nouvelle méthode pour récupérer les événements
+  Future<List<String>> fetchEvenements() async {
+    final response = await http.get(Uri.parse('$baseUrl/evenement'));
+    if (response.statusCode == 200) {
+      final dynamic data = json.decode(response.body);
+      if (data is List) {
+        return data.map((e) => e.toString()).toList();
+      }
+      throw Exception('Format de réponse invalide');
     } else {
-      throw Exception('Erreur ${response.statusCode}');
+      throw Exception('Echec du chargement des événements');
     }
-  } catch (e) {
-    print('Erreur API: $e');
-    rethrow;
   }
-}
-
-  // Nouvelle méthode pour récupérer les événements
-Future<List<String>> fetchEvenements() async {
-  final response = await http.get(Uri.parse('$baseUrl/evenement'));
-  if (response.statusCode == 200) {
-    final dynamic data = json.decode(response.body);
-    if (data is List) {
-      return data.map((e) => e.toString()).toList();
-    }
-    throw Exception('Format de réponse invalide');
-  } else {
-    throw Exception('Echec du chargement des événements');
-  }
-}
   
-
-
   final String baseUrl = 'http://172.16.194.254:5000';
 }

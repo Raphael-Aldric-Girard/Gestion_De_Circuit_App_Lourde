@@ -25,7 +25,7 @@ Future<List<String>> fetchVehicules() async {
     );
     
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+      final data = jsonDecode(response.body);
       return List<String>.from(data ?? []);
       
     } else {

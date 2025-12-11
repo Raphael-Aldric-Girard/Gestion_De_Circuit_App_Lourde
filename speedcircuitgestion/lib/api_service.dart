@@ -52,15 +52,30 @@ Future<List<String>> fetchVehicules() async {
   }
 
   Future<List<String>> fetchAllReservations() async {
-    final response = await http.get(Uri.parse('$baseUrl/toutes-reservations'));
-    if (response.statusCode == 200){
-      final dynamic data = json.decode(response.body);
-      if (data is List) {
-        return data.map((e) => e.toString()).toList();
+    try{
+      final response = await http.get(
+        Uri.parse('$baseUrl/toutes-reservations'),
+        headers: {'Content-Type': 'application/json'},
+        );
+      
+      if (response.statusCode == 200){
+        final data = jsonDecode(response.body);
+        return data.map<String>((reservation) {
+          final IdSession = reservation["IdSession"];
+          final NbReservations = reservation["NbReservationMax"];
+          final DateSession = reservation["DateSession"];
+          final Marque = reservation["Marque"];
+          final Modele = reservation["Modele"];
+          final Prenom = reservation["Prenom"];
+          final Nom = reservation["Nom"];
+          return "$IdSession $NbReservations $DateSession $Marque $Modele $Prenom $Nom";
+        }).toList();
+      } else {
+        throw Exception('Erreur ${response.statusCode}');
       }
-      throw Exception('Format de réponse invalide');
-    } else {
-      throw Exception('Echec du chargement des réservations');
+  } catch (e) {
+      print('Erreur API: $e');
+      rethrow;
     }
   }
 

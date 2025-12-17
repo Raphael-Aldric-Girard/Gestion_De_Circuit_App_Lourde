@@ -17,7 +17,7 @@ class ApiService {
   
   // Dans votre classe ApiService
 
-Future<List<String>> fetchVehicules() async {
+Future<List<Map<String, dynamic>>> fetchVehicules() async {
   try {
     final response = await http.get(
       Uri.parse('$baseUrl/vehicule'),
@@ -25,13 +25,14 @@ Future<List<String>> fetchVehicules() async {
     );
     
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-     return data.map<String>((vehicule) {
-        final id = vehicule["IdVehicule"];
-        final marque = vehicule["Marque"];
-        final modele = vehicule["Modele"];
-        return "$id $marque $modele";
-      }).toList();
+    final List<dynamic> data = jsonDecode(response.body);
+    return data.map<Map<String, dynamic>>((vehicule) {
+      return {
+        "IdVehicule": vehicule["IdVehicule"],
+        "Marque": vehicule["Marque"],
+        "Modele": vehicule["Modele"],
+      };
+    }).toList();
     } else {
       throw Exception('Erreur ${response.statusCode}');
     }

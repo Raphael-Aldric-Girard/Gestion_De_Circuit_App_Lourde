@@ -29,7 +29,7 @@ class GestionVehicule extends StatefulWidget {
 class _GestionVehicule extends State<GestionVehicule> {
   
 
-  List<String> nom_vehicule = [];
+  List<Map<String, dynamic>> nom_vehicule = [];
 
   bool isLoading = true;
 
@@ -89,10 +89,20 @@ class _GestionVehicule extends State<GestionVehicule> {
               itemCount: nom_vehicule.length,
               itemBuilder: (context, index) {
                 final vehicule = nom_vehicule[index];
+
                 return ListTile(
-                  leading: Image.asset("assets/vehicule/1.png"),
+                  leading: Image.asset("assets/vehicule/${vehicule["IdVehicule"]}.png"),
                   title: Text("${vehicule["Marque"]} ${vehicule["Modele"]}"),
+                  
                 );
+
+                TextButton(
+                  onPressed: () {
+                    // Action lors du clic sur le bouton
+                  },
+                  child: Text('Réserver'),
+                );
+
               },
             ),
     );

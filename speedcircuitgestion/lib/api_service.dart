@@ -17,30 +17,55 @@ class ApiService {
   
   // Dans votre classe ApiService
 
-Future<List<Map<String, dynamic>>> fetchVehicules() async {
-  try {
-    final response = await http.get(
+  Future<List<Map<String, dynamic>>> fetchVehicules() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/vehicule'),
+        headers: {'Content-Type': 'application/json'},
+      );
+      
+      if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map<Map<String, dynamic>>((vehicule) {
+        return {
+          "IdVehicule": vehicule["IdVehicule"],
+          "Marque": vehicule["Marque"],
+          "Modele": vehicule["Modele"],
+        };
+      }).toList();
+      } else {
+        throw Exception('Erreur ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erreur API: $e');
+      rethrow;
+    }
+  }
+
+  //méthode pour insérer des véhicules
+  Future<void> insertVehicule(String marque,int puissance, int poid, int motricite, String modele) async {
+    final response = await http.post(
       Uri.parse('$baseUrl/vehicule'),
       headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'Marque': marque,'Puissance': puissance ,'Poid': poid, 'Motricite' : motricite ,'Modele': modele}),
     );
-    
-    if (response.statusCode == 200) {
-    final List<dynamic> data = jsonDecode(response.body);
-    return data.map<Map<String, dynamic>>((vehicule) {
-      return {
-        "IdVehicule": vehicule["IdVehicule"],
-        "Marque": vehicule["Marque"],
-        "Modele": vehicule["Modele"],
-      };
-    }).toList();
-    } else {
-      throw Exception('Erreur ${response.statusCode}');
+    if (response.statusCode != 201) {
+      throw Exception('Echec de l\'insertion du véhicule');
     }
-  } catch (e) {
-    print('Erreur API: $e');
-    rethrow;
   }
-}
+
+  //méthode pour supprimer un véhicule dont l'id est passé en paramètre
+  Future<void> deleteVehicule(int idVehicule) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/vehicule/$idVehicule'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Echec de la suppression du véhicule');
+    }
+  }
+
+
 
   // Nouvelle méthode pour récupérer les événements
   Future<List<Map<String, dynamic>>> fetchEvenements() async {

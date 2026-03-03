@@ -30,6 +30,7 @@ class ApiService {
         Uri.parse('$baseUrl/vehicule'),
         headers: {'Content-Type': 'application/json'},
       );
+<<<<<<< HEAD
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -40,6 +41,18 @@ class ApiService {
             "Modele": vehicule["Modele"],
           };
         }).toList();
+=======
+      
+      if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map<Map<String, dynamic>>((vehicule) {
+        return {
+          "IdVehicule": vehicule["IdVehicule"],
+          "Marque": vehicule["Marque"],
+          "Modele": vehicule["Modele"],
+        };
+      }).toList();
+>>>>>>> 2bf057db5f186ba7b248766d9d35dd4303674800
       } else {
         throw Exception('Erreur ${response.statusCode}');
       }
@@ -49,6 +62,7 @@ class ApiService {
     }
   }
 
+<<<<<<< HEAD
   Future<List<dynamic>> getCompte() async {
     final String? userId = await _storage.read(key: 'user_id');
 
@@ -63,6 +77,32 @@ class ApiService {
       throw Exception('Erreur : ${response.body}');
     }
   }
+=======
+  //méthode pour insérer des véhicules
+  Future<void> insertVehicule(String marque,int puissance, int poid, int motricite, String modele) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/vehicule'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'Marque': marque,'Puissance': puissance ,'Poid': poid, 'Motricite' : motricite ,'Modele': modele}),
+    );
+    if (response.statusCode != 201) {
+      throw Exception('Echec de l\'insertion du véhicule');
+    }
+  }
+
+  //méthode pour supprimer un véhicule dont l'id est passé en paramètre
+  Future<void> deleteVehicule(int idVehicule) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/vehicule/$idVehicule'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Echec de la suppression du véhicule');
+    }
+  }
+
+
+>>>>>>> 2bf057db5f186ba7b248766d9d35dd4303674800
 
   // Nouvelle méthode pour récupérer les événements
   Future<List<Map<String, dynamic>>> fetchEvenements() async {

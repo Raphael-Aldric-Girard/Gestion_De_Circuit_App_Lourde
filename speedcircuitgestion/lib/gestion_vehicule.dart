@@ -101,6 +101,18 @@ class _GestionVehicule extends State<GestionVehicule> {
                     ),
                   ),
                 );
+<<<<<<< HEAD
+=======
+
+                TextButton(
+                  onPressed: () {
+                    // Action lors du clic sur le bouton
+                    
+                  },
+                  child: Text('Réserver'),
+                );
+
+>>>>>>> 2bf057db5f186ba7b248766d9d35dd4303674800
               },
             ),
     );

@@ -1,7 +1,6 @@
 import 'api_service.dart';
 import 'package:flutter/material.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -17,9 +16,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class GestionVehicule extends StatefulWidget {
-  const GestionVehicule({Key? key}): super(key: key);
+  const GestionVehicule({Key? key}) : super(key: key);
   //final String title;
 
   @override
@@ -27,8 +25,6 @@ class GestionVehicule extends StatefulWidget {
 }
 
 class _GestionVehicule extends State<GestionVehicule> {
-  
-
   List<Map<String, dynamic>> nom_vehicule = [];
 
   bool isLoading = true;
@@ -45,10 +41,9 @@ class _GestionVehicule extends State<GestionVehicule> {
       final data = await ApiService().fetchVehicules();
       print('Résultat API: $data');
       setState(() {
-        nom_vehicule = data;  
+        nom_vehicule = data;
         isLoading = false;
       });
-      
     } catch (e) {
       setState(() {
         isLoading = false;
@@ -69,7 +64,7 @@ class _GestionVehicule extends State<GestionVehicule> {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
-                fontStyle: FontStyle.italic
+                fontStyle: FontStyle.italic,
               ),
             ),
             SizedBox(width: 40),
@@ -90,19 +85,22 @@ class _GestionVehicule extends State<GestionVehicule> {
               itemBuilder: (context, index) {
                 final vehicule = nom_vehicule[index];
 
-                return ListTile(
-                  leading: Image.asset("assets/vehicule/${vehicule["IdVehicule"]}.png"),
-                  title: Text("${vehicule["Marque"]} ${vehicule["Modele"]}"),
-                  
+                return Card(
+                  child: ListTile(
+                    leading: Image.asset(
+                      "assets/vehicule/${vehicule["IdVehicule"]}.png",
+                      errorBuilder: (context, error, StackTrace) =>
+                          Icon(Icons.directions_car),
+                    ),
+                    title: Text("${vehicule["Marque"]} ${vehicule["Modele"]}"),
+                    trailing: TextButton(
+                      onPressed: () {
+                        // Action lors du clic sur le bouton
+                      },
+                      child: Text('réserver'),
+                    ),
+                  ),
                 );
-
-                TextButton(
-                  onPressed: () {
-                    // Action lors du clic sur le bouton
-                  },
-                  child: Text('Réserver'),
-                );
-
               },
             ),
     );
